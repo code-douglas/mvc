@@ -2,30 +2,20 @@ import express from 'express';
 import exphbs from 'express-handlebars';
 import { join } from 'path';
 
-
 import connection from './db/connection.mjs';
 import Task from './src/models/Task.mjs';
 import taskRoutes from './src/routes/taskRoutes.mjs';
 
 const app = express();
 
-app.use('/tasks', taskRoutes);
-
-// Express use handlebars
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.set('view engine', 'handlebars');
 app.set('views', join(process.cwd(), 'src', 'views'));
 app.engine('handlebars', exphbs.engine());
-
-// Set directory public
 app.use(express.static('public'));
 
-// Set body/url data
-app.use(
-  express.urlencoded(
-    { extended: true }
-  )
-);
-app.use(express.json());
+app.use('/tasks', taskRoutes);
 
 connection
   .sync()
