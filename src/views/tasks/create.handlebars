@@ -1,1 +1,16 @@
-<h1>Criação das Tasks</h1>
+<div class="container">
+  <div class="form-container">
+    <h1>Quais as tarefas para hoje?</h1>
+    <form action="/tasks/add" method="POST">
+      <div class="form-control">
+        <label for="title">Título:</label>
+        <input type="text" name="title" placeholder="O que você vai fazer?">
+      </div>
+      <div class="form-control">
+        <label for="description">Descrição:</label>
+        <textarea name="description" placeholder="O que você vai fazer?"></textarea>
+      </div>
+      <input type="submit" value="Criar">
+    </form>
+  </div>
+</div>
