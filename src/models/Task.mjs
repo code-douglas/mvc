@@ -4,7 +4,7 @@ import connection from '../../db/connection.mjs';
 const Task = connection.define('Task', {
   title: {
     type: DataTypes.STRING,
-    require: true,
+    allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
