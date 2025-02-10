@@ -1,17 +1,19 @@
 import express from 'express';
 import exphbs from 'express-handlebars';
+import { join } from 'path';
 
-// Database connection
+
 import connection from './db/connection.mjs';
-
-// Models
-
 import Task from './src/models/Task.mjs';
+import taskRoutes from './src/routes/taskRoutes.mjs';
 
 const app = express();
 
+app.use('/tasks', taskRoutes);
+
 // Express use handlebars
 app.set('view engine', 'handlebars');
+app.set('views', join(process.cwd(), 'src', 'views'));
 app.engine('handlebars', exphbs.engine());
 
 // Set directory public
@@ -24,10 +26,6 @@ app.use(
   )
 );
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Olá');
-});
 
 connection
   .sync()
