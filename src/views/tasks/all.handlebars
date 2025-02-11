@@ -1,1 +1,25 @@
-<h1>Todas as Tarefas: </h1>
+<div class="task-container">
+  {{#if tasks.length}}
+    <h1>Todas as tarefas: </h1>
+    <ul class="task-list">
+      {{#each tasks}}
+        <li class="item">
+          <a href="/" class="title">{{this.title}}</a>
+          <div class="actions">
+            <a href="/"><i class="bi bi-check-circle-fill"></i></a>
+            <a href="/tasks/edit/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+            <form action="/tasks/remove" method="post">
+            <input type="hidden" name="id" value="{{this.id}}">
+              <button type="submit">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </form>
+          </div>
+        </li>
+      {{/each}}
+    {{else}}
+      <h1>Não há tarefas registradas.</h1>
+    {{/if}}
+    
+  </ul>
+</div>
