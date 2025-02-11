@@ -1,3 +1,4 @@
+import { where } from 'sequelize';
 import Task from '../models/Task.mjs';
 
 export default class TaskController {
@@ -17,7 +18,28 @@ export default class TaskController {
       .then(res.redirect('/tasks'))
       .catch(error => console.log(error));
   }
-  static showTasks(req, res) {
-    res.render('tasks/all');
+
+  static async removeTask (req, res) {
+    const id = req.body.id;
+
+    await Task.destroy({ where: { id: id } });
+
+    res.redirect('/tasks');
+  }
+  static async showTasks(req, res) {
+
+    const tasks = await Task.findAll({ raw: true });
+
+    res.render('tasks/all', { tasks });
+  }
+
+  static async updateTask(req, res) {
+
+    const id = req.params.id;
+
+    const task = await Task.findOne( { where: { id: id }, raw: true });
+
+    res.render('tasks/edit', { task });
+
   }
 }
