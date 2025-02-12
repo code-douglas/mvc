@@ -1,4 +1,3 @@
-import { where } from 'sequelize';
 import Task from '../models/Task.mjs';
 
 export default class TaskController {
@@ -41,5 +40,30 @@ export default class TaskController {
 
     res.render('tasks/edit', { task });
 
+  }
+
+  static async updateTaskSave(req, res) {
+    const { id, title, description } = req.body;
+
+    const task = {
+      title,
+      description
+    };
+
+    await Task.update(task, { where: { id: id } });
+
+    res.redirect('/tasks');
+  }
+
+  static async toggleTaskStatus(req, res) {
+    const id = req.body.id;
+
+    const taskStatus = {
+      done: req.body.done === '0' ? true : false
+    };
+
+    await Task.update(taskStatus, { where: { id: id } });
+
+    res.redirect('/tasks');
   }
 }
